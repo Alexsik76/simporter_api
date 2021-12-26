@@ -1,4 +1,4 @@
-#Simporter Test Task (Junior PyDev)
+# Simporter Test Task (Junior PyDev)
 
 Let’s suppose we have a number of events that are distributed in time. Each event has several
 attributes. And we have a service (webpage) which purpose is to visualize this distribution (i.e.
@@ -7,7 +7,7 @@ way (see below).
 
 Your task is to create an API providing data for visualization.
 
-##Details
+## Details
 
 Source data is csv file containing following data:
 
@@ -19,7 +19,7 @@ Link: https://1drv.ms/u/s!AvTeEdxQwFAJqliTn-n6Yxk353vF?e=llePiD
 
 You are expected to create two API methods:
 
-###GET /api/info
+### GET /api/info
 Example:
 
 http://localhost:5000/api/info
@@ -33,15 +33,16 @@ Example:
 
 http://localhost:5000/api/timeline?startDate=2019-01-01&endDate=2020-01-01&Type=cumulative&Grouping=weekly&attr1=value1&attr2=value2
 
-####Parameters:
+#### Parameters:
 * startDate
 * endDate
 * Type (cumulative or usual)
 * Grouping (weekly, bi-weekly or monthly)
 * Filters (attributes and values)
-* 
-####Grouping types:
-#####You need to aggregate data during the period (from startDate to endDate):
+
+#### Grouping types:
+
+##### You need to aggregate data during the period (from startDate to endDate):
 * weekly (data for each week)
 * bi - weekly (data for each 2 weeks)
 * monthly (data for each month)
@@ -68,7 +69,7 @@ Technical requirements
 
 Good luck and have fun.
 
-###Example query:
+### Example query:
 
 ```sql
 SELECT strftime('%W', timestamp) AS  WeekNumber,
