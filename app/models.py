@@ -7,7 +7,7 @@ class EventModel(db.Model):
     brand = db.Column(db.String(25), index=True)
     source = db.Column(db.String(15), index=True)
     stars = db.Column(db.Integer, index=True)
-    timestamp = db.Column(db.DateTime, index=True)
+    timestamp = db.Column(db.Date, index=True)
 
     def __repr__(self):
         return self.id

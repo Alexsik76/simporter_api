@@ -58,7 +58,7 @@ The response should have “timeline”(str) as a key, value - list of dicts wit
 Example of response:
 
 ```json
-{“timeline”: [{“date”: “2019-01-01”, value: 10}, … ] }
+{"timeline": [{"date": "2019-01-01", "value": 10} ] }
 ```
 
 Technical requirements
@@ -67,3 +67,17 @@ Technical requirements
 * Other details are up to you
 
 Good luck and have fun.
+
+###Example query:
+
+```sql
+SELECT strftime('%W', timestamp) AS  WeekNumber,
+       COUNT(id) AS Events,
+       SUM(COUNT(id)) OVER (order by timestamp) as Sum,
+       timestamp
+FROM event_model
+WHERE timestamp BETWEEN '2019-01-01' AND
+datetime('2019-01-01', '+9 months')
+GROUP BY WeekNumber
+ORDER BY WeekNumber
+```

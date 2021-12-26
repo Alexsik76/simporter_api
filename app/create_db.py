@@ -1,4 +1,4 @@
-import datetime
+from datetime import date, timezone
 import os
 import csv
 import click
@@ -36,7 +36,7 @@ def init_db():
                 brand=event.brand,
                 source=event.source,
                 stars=int(event.stars),
-                timestamp=datetime.datetime.fromtimestamp(int(event.timestamp))
+                timestamp=date.fromtimestamp(int(event.timestamp))
             ))
         db.session.add_all(events_db)
         db.session.commit()
