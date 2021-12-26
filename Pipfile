@@ -7,8 +7,9 @@ name = "pypi"
 flask-restx = "*"
 flask-sqlalchemy = "*"
 python-dotenv = "*"
-easygui = "*"
-yaspin = "*"
+flask = "~=2.0.2"
+sqlalchemy = "~=1.4.29"
+click = "~=8.0.3"
 
 [dev-packages]
 

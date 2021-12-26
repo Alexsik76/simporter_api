@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e053390eed2fc8e7419aba3ea9c8c95c3c50897e660637649534c94f1ed7d6a2"
+            "sha256": "86af659121732a10fd6ad6d003b69ce5411c878b2c0a32b1de8af3c0b801b011"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -37,7 +37,7 @@
                 "sha256:353f466495adaeb40b6b5f592f9f91cb22372351c84caeb068132442a4518ef3",
                 "sha256:410e932b050f5eed773c4cda94de75971c89cdb3155a72a0831139a79e5ecb5b"
             ],
-            "markers": "python_version >= '3.6'",
+            "index": "pypi",
             "version": "==8.0.3"
         },
         "colorama": {
@@ -48,20 +48,12 @@
             "markers": "platform_system == 'Windows'",
             "version": "==0.4.4"
         },
-        "easygui": {
-            "hashes": [
-                "sha256:073f728ca88a77b74f404446fb8ec3004945427677c5618bd00f70c1b999fef2",
-                "sha256:8d38764803c27bbccab2771e6c021cb20647049b36617f765fac79f01af07a27"
-            ],
-            "index": "pypi",
-            "version": "==0.98.2"
-        },
         "flask": {
             "hashes": [
                 "sha256:7b2fb8e934ddd50731893bdcdb00fc8c0315916f9fcd50d22c7cc1a95ab634e2",
                 "sha256:cb90f62f1d8e4dc4621f52106613488b5ba826b2e1e10a33eac92f723093ab6a"
             ],
-            "markers": "python_version >= '3.6'",
+            "index": "pypi",
             "version": "==2.0.2"
         },
         "flask-restx": {
@@ -329,14 +321,8 @@
                 "sha256:fa2bad14e1474ba649cfc969c1d2ec915dd3e79677f346bbfe08e93ef9020b39",
                 "sha256:fbc6e63e481fa323036f305ada96a3362e1d60dd2bfa026cac10c3553e6880e9"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5'",
+            "index": "pypi",
             "version": "==1.4.29"
-        },
-        "termcolor": {
-            "hashes": [
-                "sha256:1d6d69ce66211143803fbc56652b41d73b4a400a2891d7bf7a1cdf4c02de613b"
-            ],
-            "version": "==1.1.0"
         },
         "werkzeug": {
             "hashes": [
@@ -345,14 +331,6 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==2.0.2"
-        },
-        "yaspin": {
-            "hashes": [
-                "sha256:c8d34eca9fda3f4dfbe59f57f3cf0f3641af3eefbf1544fbeb9b3bacf82c580a",
-                "sha256:d574cbfaf0a349df466c91f7f81b22460ae5ebb15ecb8bf9411d6049923aee8d"
-            ],
-            "index": "pypi",
-            "version": "==2.1.0"
         }
     },
     "develop": {}

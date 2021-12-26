@@ -1,46 +1,60 @@
-from datetime import date, timezone
+from datetime import date
+import logging
 import os
 import csv
 import click
-from dataclasses import make_dataclass
+from dataclasses import dataclass, make_dataclass
 from app.models import EventModel
 from flask.cli import with_appcontext
-from yaspin import yaspin
 from app import db
+from typing import Any, Iterable
+
+# asin;brand;id;source;stars;timestamp
+
+
+# TODO: is this unnecessarily complicated?
+def get_dataclass(headers: Iterable) -> Any:
+    BaseDataClass: Any = make_dataclass('BaseDataClass', [item.strip() for item in headers]) # noqa
+
+    @dataclass
+    class EventDataclass(BaseDataClass):
+        def __post_init__(self):
+            self.stars = int(self.stars)  # noqa
+            self.timestamp = date.fromtimestamp(int(self.timestamp)) # noqa
+    return EventDataclass
 
 
 def read_csv(file):
     with open(file) as csv_file:
         event_reader = csv.reader(csv_file, delimiter=';')
         headers = next(event_reader)
-        event_class = make_dataclass('EventItem', [item.strip() for item in headers])
+        EventDataclass = get_dataclass(headers) # noqa
         for row in event_reader:
-            yield event_class(*row)
+            try:
+                row_to_base = EventDataclass(*row)
+                yield row_to_base
+            except ValueError as e:
+                logging.warning(f'\n{e} in line {event_reader.line_num}: {row} \nrow skipped')
 
 
 def init_db():
     db.drop_all()
-    print('All tables are dropped.')
     db.create_all()
-    print('Created new tables.')
-    print('...')
     dirname = os.path.dirname(__file__)
-    file = os.path.join(dirname, '../source_data/data.csv')
+    file = os.path.join(dirname, '../source_data/data2.csv')
     all_events = read_csv(file=file)
     events_db = []
-    with yaspin(text="Storing data from file to database...", color="green", timer=True) as spinner:
-        for event in all_events:
-            events_db.append(EventModel(
-                id=event.id,
-                asin=event.asin,
-                brand=event.brand,
-                source=event.source,
-                stars=int(event.stars),
-                timestamp=date.fromtimestamp(int(event.timestamp))
-            ))
-        db.session.add_all(events_db)
-        db.session.commit()
-        spinner.ok('✅')
+    for event in all_events:
+        events_db.append(EventModel(
+            id=event.id,
+            asin=event.asin,
+            brand=event.brand,
+            source=event.source,
+            stars=event.stars,
+            timestamp=event.timestamp
+        ))
+    db.session.add_all(events_db)
+    db.session.commit()
 
 
 @click.command('init-db')
@@ -48,7 +62,9 @@ def init_db():
 def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
-    click.echo('\nDatabase is initialized.')
+    click.echo(f'\nDatabase is initialized.')
+
+# TODO: add parameter filename
 
 
 def init_app(app):
