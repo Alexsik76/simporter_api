@@ -44,8 +44,8 @@ def create_app(test_config=False):
     from app.create_db import init_app
     init_app(app)
 
-    # from app.api import bp_api
-    # app.register_blueprint(bp_api, url_prefix='/api/v1/')
+    from app.api import bp_api
+    app.register_blueprint(bp_api, url_prefix='/api/v1/')
     return app
 
 
