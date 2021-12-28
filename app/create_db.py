@@ -9,8 +9,6 @@ from flask.cli import with_appcontext
 from app import db
 from typing import Any, Iterable
 
-# asin;brand;id;source;stars;timestamp
-
 
 # TODO: is this unnecessarily complicated?
 def get_dataclass(headers: Iterable) -> Any:
