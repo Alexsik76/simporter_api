@@ -69,16 +69,38 @@ Technical requirements
 
 Good luck and have fun.
 
-### Example query:
 
-```sql
-SELECT strftime('%W', timestamp) AS  WeekNumber,
-       COUNT(id) AS Events,
-       SUM(COUNT(id)) OVER (order by timestamp) as Sum,
-       timestamp
-FROM event_model
-WHERE timestamp BETWEEN '2019-01-01' AND
-datetime('2019-01-01', '+9 months')
-GROUP BY WeekNumber
-ORDER BY WeekNumber
-```
+
+# implementation
+
+## Preparation
+
+This application was created with pipenv usage.
+That`s why, to begin your work you need to install dependencies:
+
+`pipenv install`
+
+Next you need to activate the virtual environment:
+
+`pipenv shell`
+
+### Creating a database
+
+> **Warning**
+> When using this operation data of the existent database will be deleted.
+
+Actions are performed in console with active virtual environment.
+
+Command ```flask init-db``` 
+
+- clear current database structure;
+- create a new structure;
+- generate experimental data;
+- place it in the database.
+
+If the command usage was successful you can start using the app.
+
+### USE
+
+Swagger available by link:
+Detailed documentation by link: [http://127.0.0.1:5000](http://127.0.0.1:5000)

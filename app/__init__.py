@@ -1,9 +1,6 @@
 from flask import Flask
 from config import app_config
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import OperationalError
-# from flask_marshmallow import Marshmallow
-# from flaskext.markdown import Markdown
 
 
 db = SQLAlchemy()

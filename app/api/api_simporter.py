@@ -64,10 +64,10 @@ event_model = api.model('Event', {
 class Timeline(Resource):
 
     @api.marshal_with(event_model, envelope='timeline')
+    @api.doc(parser=parser)
     def get(self):
         """ Show a timeline by param."""
         args = parser.parse_args()
-
         output_data = EventModel.query \
             .with_entities(*get_entities(args['Type'])) \
             .filter(and_(*get_period(args['startDate'], args['endDate']), *get_attributes(args))) \

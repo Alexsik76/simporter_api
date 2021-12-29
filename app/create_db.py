@@ -39,7 +39,7 @@ def init_db():
     db.drop_all()
     db.create_all()
     dirname = os.path.dirname(__file__)
-    file = os.path.join(dirname, '../source_data/data2.csv')
+    file = os.path.join(dirname, '../source_data/data.csv')
     all_events = read_csv(file=file)
     events_db = []
     for event in all_events:
