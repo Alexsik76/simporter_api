@@ -62,8 +62,6 @@ def init_db_command():
     init_db()
     click.echo(f'\nDatabase is initialized.')
 
-# TODO: add parameter filename
-
 
 def init_app(app):
     app.cli.add_command(init_db_command)

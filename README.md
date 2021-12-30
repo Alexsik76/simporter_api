@@ -73,7 +73,7 @@ Good luck and have fun.
 
 
 
-# implementation
+# Implementation
 
 ## Preparation
 
@@ -85,6 +85,8 @@ That`s why, to begin your work you need to install dependencies:
 Next you need to activate the virtual environment:
 
 `pipenv shell`
+
+`Pip` can be used too - the file `requirements.txt` is present. 
 
 ### Creating a database
 
@@ -102,7 +104,12 @@ Command ```flask init-db```
 
 If the command usage was successful you can start using the app.
 
-### USE
+### Usage
 
 Swagger available by link:
 Detailed documentation by link: [http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+### Testing
+
+`Pytest` is used for testing. 
+

@@ -1,5 +1,5 @@
 from sqlalchemy import and_, func, desc
-from flask_restx import Resource, Api, fields, marshal, reqparse
+from flask_restx import Resource, Api, marshal, reqparse, fields
 
 from app.api import bp_api
 from app.models import EventModel
@@ -41,12 +41,12 @@ def get_distinct_values():
 parser = reqparse.RequestParser()
 
 parser.add_argument("startDate", type=str, required=True, help="Start date")
-parser.add_argument("endDate", type=str, required=True, help="Start date")
+parser.add_argument("endDate", type=str, required=True, help="End date")
 
 parser.add_argument('Type', choices=('cumulative', 'usual'))
 parser.add_argument('Grouping', choices=('weekly', 'bi-weekly', 'monthly'),
-                    help='weekly - (data for each week),'
-                         'bi-weekly - (data for each 2 weeks),'
+                    help='weekly - (data for each week), '
+                         'bi-weekly - (data for each 2 weeks), '
                          'monthly (data for each month)')
 
 parser.add_argument('asin', type=str, help="Amazon Standard Identification Number")
@@ -106,15 +106,3 @@ def get_attributes(args):
     attributes = {key: value for key, value in args.items() if key in ATTR_LIST}
     queries = ((getattr(EventModel, key) == value) for key, value in attributes.items() if value)
     return queries
-
-
-"""
-SELECT strftime('%W-%Y', timestamp) AS  WeekNumber,
-       COUNT(id) AS Events,
-       SUM(COUNT(id)) OVER (order by timestamp) as Sum,
-       timestamp
-FROM event_model
-WHERE timestamp BETWEEN '2019-01-01' AND
-datetime('2019-01-01', '+9 months')
-GROUP BY WeekNumber
-ORDER BY WeekNumber"""

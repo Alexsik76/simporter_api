@@ -12,6 +12,7 @@ sqlalchemy = "~=1.4.29"
 click = "~=8.0.3"
 pytest = "*"
 coverage = "*"
+pytest-flask = "*"
 
 [dev-packages]
 
