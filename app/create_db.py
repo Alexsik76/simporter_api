@@ -1,10 +1,11 @@
 from datetime import date
 import logging
-import os
 import csv
+from yaspin import yaspin
 import click
 from dataclasses import dataclass, make_dataclass
 from app.models import EventModel
+from flask import current_app
 from flask.cli import with_appcontext
 from app import db
 from typing import Any, Iterable
@@ -38,19 +39,20 @@ def read_csv(file):
 def init_db():
     db.drop_all()
     db.create_all()
-    dirname = os.path.dirname(__file__)
-    file = os.path.join(dirname, '../source_data/data.csv')
-    all_events = read_csv(file=file)
+    file2 = current_app.config.get('SOURCE_PATH')
+    all_events = read_csv(file=file2)
     events_db = []
-    for event in all_events:
-        events_db.append(EventModel(
-            id=event.id,
-            asin=event.asin,
-            brand=event.brand,
-            source=event.source,
-            stars=event.stars,
-            timestamp=event.timestamp
-        ))
+    with yaspin(text="Loading", color="green") as spinner:
+        for event in all_events:
+            events_db.append(EventModel(
+                id=event.id,
+                asin=event.asin,
+                brand=event.brand,
+                source=event.source,
+                stars=event.stars,
+                timestamp=event.timestamp
+            ))
+        spinner.ok("✅ ")
     db.session.add_all(events_db)
     db.session.commit()
 

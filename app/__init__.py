@@ -1,3 +1,5 @@
+import logging
+
 from flask import Flask
 from config import app_config
 from flask_sqlalchemy import SQLAlchemy
@@ -14,6 +16,9 @@ def create_app(test_config=False):
         app.config.from_object(app_config['develop'])
 
     db.init_app(app)
+    engine = db.get_engine(app)
+    if not engine.table_names():
+        logging.warning('\nDatabase is not exist')
     from app.create_db import init_app
     init_app(app)
 
