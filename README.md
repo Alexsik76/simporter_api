@@ -95,6 +95,10 @@ Next you need to activate the virtual environment:
 
 Actions are performed in console with active virtual environment.
 
+Source file must be placed in the `source_data` folder.
+
+By default, name of the source file sets to `data.csv`, but can be changed in `.env` file, or environment variable `SOURCE_FILE_NAME`.
+
 Command ```flask init-db``` 
 
 - clear current database structure;
