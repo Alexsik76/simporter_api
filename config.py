@@ -21,6 +21,7 @@ class TestingConfig(Config):
     DEBUG = False
     TESTING = True
     BASE_DIR = basedir
+    SQLALCHEMY_DATABASE_URI = "sqlite://"
 
 
 app_config = {

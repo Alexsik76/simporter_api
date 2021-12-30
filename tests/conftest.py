@@ -1,6 +1,3 @@
-import os
-import tempfile
-
 import pytest
 
 from app import create_app
@@ -17,21 +14,6 @@ def app(request):
 
     request.addfinalizer(teardown)
     return app
-
-
-@pytest.fixture
-def client():
-    db_fd, db_path = tempfile.mkstemp()
-    app = create_app({'TESTING': True, 'DATABASE': db_path})
-
-    with app.test_client() as client:
-        with app.app_context():
-            from app.create_db import init_app
-            init_app(app)
-        yield client
-
-    os.close(db_fd)
-    os.unlink(db_path)
 
 
 @pytest.fixture

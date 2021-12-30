@@ -1,4 +1,6 @@
-# Simporter Test Task (Junior PyDev)
+# The task given:
+
+## Simporter Test Task (Junior PyDev)
 
 Let’s suppose we have a number of events that are distributed in time. Each event has several
 attributes. And we have a service (webpage) which purpose is to visualize this distribution (i.e.
@@ -7,7 +9,7 @@ way (see below).
 
 Your task is to create an API providing data for visualization.
 
-## Details
+### Details
 
 Source data is csv file containing following data:
 
@@ -19,7 +21,7 @@ Link: https://1drv.ms/u/s!AvTeEdxQwFAJqliTn-n6Yxk353vF?e=llePiD
 
 You are expected to create two API methods:
 
-### GET /api/info
+#### GET /api/info
 Example:
 
 http://localhost:5000/api/info
@@ -33,7 +35,7 @@ Example:
 
 http://localhost:5000/api/timeline?startDate=2019-01-01&endDate=2020-01-01&Type=cumulative&Grouping=weekly&attr1=value1&attr2=value2
 
-#### Parameters:
+##### Parameters:
 * startDate
 * endDate
 * Type (cumulative or usual)
@@ -71,7 +73,7 @@ Good luck and have fun.
 
 
 
-# implementation
+# Implementation
 
 ## Preparation
 
@@ -83,6 +85,8 @@ That`s why, to begin your work you need to install dependencies:
 Next you need to activate the virtual environment:
 
 `pipenv shell`
+
+`Pip` can be used too - the file `requirements.txt` is present. 
 
 ### Creating a database
 
@@ -100,7 +104,12 @@ Command ```flask init-db```
 
 If the command usage was successful you can start using the app.
 
-### USE
+### Usage
 
 Swagger available by link:
 Detailed documentation by link: [http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+### Testing
+
+`Pytest` is used for testing. 
+
