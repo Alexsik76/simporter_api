@@ -4,9 +4,9 @@ from flask_restx import Resource, Api, marshal, reqparse, fields
 from app.api import bp_api
 from app.models import EventModel
 
-api = Api(bp_api, version='1.0', title="Simporter", description='A Simporter API')
+api = Api(bp_api, version='1.0', title="Simporter",
+          description='A Simporter API')
 ns = api.namespace('api', description='Base API')
-
 
 ATTR_LIST = 'asin', 'brand', 'source', 'stars'
 
@@ -21,10 +21,15 @@ attr_fields = {attr: fields.List(FromTupleString) for attr in ATTR_LIST}
 
 @ns.route('/info')
 class FilteringInfo(Resource):
-    def get(self): # noqa
-        """Get  Information about possible filtering (list of attributes and list of values for each attribute)"""
-        start_date = EventModel.query.order_by('timestamp').first().timestamp.isoformat()
-        end_date = EventModel.query.order_by(desc('timestamp')).first().timestamp.isoformat()
+    def get(self):  # noqa
+        """
+        Get  Information about possible filtering (list of attributes and
+        list of values for each attribute)
+         """
+        start_date = EventModel.query.order_by(
+            'timestamp').first().timestamp.isoformat()
+        end_date = EventModel.query.order_by(
+            desc('timestamp')).first().timestamp.isoformat()
         data = [{'startDate': [start_date, end_date]},
                 {'endDate': [start_date, end_date]},
                 {'Type': ['cumulative', 'usual']},
@@ -34,7 +39,8 @@ class FilteringInfo(Resource):
 
 
 def get_distinct_values():
-    data = {attr: EventModel.query.with_entities(getattr(EventModel, attr)).distinct() for attr in ATTR_LIST}
+    data = {attr: EventModel.query.with_entities(
+        getattr(EventModel, attr)).distinct() for attr in ATTR_LIST}
     return marshal(data, attr_fields)
 
 
@@ -49,7 +55,8 @@ parser.add_argument('Grouping', choices=('weekly', 'bi-weekly', 'monthly'),
                          'bi-weekly - (data for each 2 weeks), '
                          'monthly (data for each month)')
 
-parser.add_argument('asin', type=str, help="Amazon Standard Identification Number")
+parser.add_argument('asin', type=str,
+                    help="Amazon Standard Identification Number")
 parser.add_argument('brand', type=str, help="Brand")
 parser.add_argument('source', type=str, help="Source")
 parser.add_argument('stars', type=str, help="Stars")
@@ -70,7 +77,8 @@ class Timeline(Resource):
         args = parser.parse_args()
         output_data = EventModel.query \
             .with_entities(*get_entities(args['Type'])) \
-            .filter(and_(*get_period(args['startDate'], args['endDate']), *get_attributes(args))) \
+            .filter(and_(*get_period(args['startDate'], args['endDate']),
+                         *get_attributes(args))) \
             .group_by(*get_grouping(args['Grouping'])) \
             .order_by(EventModel.timestamp) \
             .all()
@@ -79,7 +87,8 @@ class Timeline(Resource):
 
 def get_entities(key=None):
     data_types_dict = {
-        'cumulative': func.sum(func.count(EventModel.id)).over(order_by=EventModel.timestamp).label('value')
+        'cumulative': func.sum(func.count(EventModel.id)).over(
+            order_by=EventModel.timestamp).label('value')
     }
     return (func.date(EventModel.timestamp).label('date'),
             data_types_dict.get(key,
@@ -95,14 +104,17 @@ def get_period(start_date, end_date):
 
 
 def get_grouping(grouping=None):
-    grouping_dict = {'bi-weekly': (func.strftime('%W', EventModel.timestamp)) / 2,
-                     'monthly': func.strftime('%m', EventModel.timestamp)}
+    grouping_dict = {
+        'bi-weekly': (func.strftime('%W', EventModel.timestamp)) / 2,
+        'monthly': func.strftime('%m', EventModel.timestamp)}
     return (func.strftime('%Y', EventModel.timestamp),
             grouping_dict.get(grouping,
                               func.strftime('%W', EventModel.timestamp)))
 
 
 def get_attributes(args):
-    attributes = {key: value for key, value in args.items() if key in ATTR_LIST}
-    queries = ((getattr(EventModel, key) == value) for key, value in attributes.items() if value)
+    attributes = {key: value for key, value in args.items() if
+                  key in ATTR_LIST}
+    queries = ((getattr(EventModel, key) == value) for key, value in
+               attributes.items() if value)
     return queries
